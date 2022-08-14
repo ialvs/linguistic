@@ -1,5 +1,6 @@
 # classe que auxilia o processo de filtragem estabelecendo uma referência entre os Radio Buttons e os parâmetros sociais
 
+
 def check_ano(valor):
     if valor[0]:
         r_ano = '1º ano'
@@ -11,8 +12,9 @@ def check_ano(valor):
         r_ano = '4º ano (EM Técnico)'
     else:
         r_ano = ''
-   
+
     return r_ano
+
 
 def check_pe(valor):
     if valor[0]:
@@ -25,8 +27,9 @@ def check_pe(valor):
         rpe = 'Mista (Maioria em rede privada)'
     else:
         rpe = ''
-    
+
     return rpe
+
 
 def check_g(valor):
     if valor[0]:
@@ -36,6 +39,7 @@ def check_g(valor):
     else:
         rg = ''
     return rg
+
 
 def cod_faixaetaria(coluna):
     if coluna == 'Faixa 1 (13 a 20)':
@@ -47,4 +51,3 @@ def cod_faixaetaria(coluna):
     elif coluna == 'Faixa 4 (+ de 60)':
         cs = '+'
     return cs
-        
