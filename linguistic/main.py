@@ -102,9 +102,9 @@ while True:   # abertura do loop pra manter o programa aberto
 
         graficos_al = telaTres.mostrar_graphs(df_al)
         nome_arquivo = df_al.iloc[1, 0]
-        t = f'C:/Users/iansa/Documents/linguistic/gráficos/tipo_{nome_arquivo}.png'
-        d = f'C:/Users/iansa/Documents/linguistic/gráficos/desvio_{nome_arquivo}.png'
-        a = f'C:/Users/iansa/Documents/linguistic/gráficos/desvio_{nome_arquivo} (s).png'
+        t = f'linguistic/saidas/gráficos/tipo_{nome_arquivo}.png'
+        d = f'linguistic/saidas/gráficos/desvio_{nome_arquivo}.png'
+        a = f'linguistic/saidas/gráficos/desvio_{nome_arquivo} (s).png'
 
         stat_tipo = df_al.groupby(by='tipo').size()
         st = stat_tipo.to_string() + '\n' + '\n'
