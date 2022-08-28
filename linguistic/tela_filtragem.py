@@ -2,7 +2,7 @@
 
 import os.path  # importa biblioteca para manipular o caminho dos arquivos
 
-import Checagem as chk  # importa classe utilizada no processo de filtragem
+import checagem as chk  # importa classe utilizada no processo de filtragem
 import pandas as pd  # importa o pandas, biblioteca de data science
 import PySimpleGUI as sg  # importa a biblioteca gráfica
 
@@ -161,8 +161,11 @@ def ver_tabela(dataf):   # abre a visualização do dataframe filtrado
     cabecalhos = []
     data = []
 
-    cabecalhos = list(dataf.columns)
-    data = dataf[0:].values.tolist()
+    if (dataf != ''):
+        data = dataf[0:].values.tolist()
+        cabecalhos = list(dataf.columns)
+    else:
+        data.append('')
 
     layout = [
         [
@@ -202,54 +205,55 @@ def ver_tabela(dataf):   # abre a visualização do dataframe filtrado
 
 def escolher(valor_input):   # abre o arquivo selecionado
     arquivo = valor_input
-    try:
+    
+    if (os.path.realpath(arquivo) != ''):
         caminho_arquivo = os.path.realpath(arquivo)
         df = pd.read_excel(caminho_arquivo)
         return df
-
-    except:
+    else:
         caminho_arquivo = []
+        return ''
 
 
 def filtrar(dataf, tela):   # filtra o dataframe de acordo com o parâmetros
     window2 = tela
     df = dataf
     resultado = 'Nenhum dado encontrado'
-    button, values = window2.Read()
+    values = window2.Read()
 
-    testesano = []
-    testesano.append(values['primeiro_ano'])
-    testesano.append(values['segundo_ano'])
-    testesano.append(values['terceiro_ano'])
-    testesano.append(values['quarto_ano'])
+    testes_ano = []
+    testes_ano.append(values['primeiro_ano'])
+    testes_ano.append(values['segundo_ano'])
+    testes_ano.append(values['terceiro_ano'])
+    testes_ano.append(values['quarto_ano'])
 
-    ano = chk.check_ano(testesano)
+    ano = chk.check_ano(testes_ano)
 
-    testesgenero = []
-    testesgenero.append(values['feminino'])
-    testesgenero.append(values['masculino'])
+    testes_genero = []
+    testes_genero.append(values['feminino'])
+    testes_genero.append(values['masculino'])
 
-    genero = chk.check_g(testesgenero)
+    genero = chk.check_g(testes_genero)
 
-    testesproced = []
-    testesproced.append(values['publica'])
-    testesproced.append(values['privada'])
-    testesproced.append(values['mista_publica'])
-    testesproced.append(values['mista_privada'])
+    testes_procedencia = []
+    testes_procedencia.append(values['publica'])
+    testes_procedencia.append(values['privada'])
+    testes_procedencia.append(values['mista_publica'])
+    testes_procedencia.append(values['mista_privada'])
 
-    proced = chk.check_pe(testesproced)
+    proced = chk.check_pe(testes_procedencia)
 
     contadores = []
     contadores = [0, 0, 0]
 
-    for x in testesano:
-        if x:
+    for ocorrencia in testes_ano:
+        if ocorrencia:
             contadores[0] = contadores[0] + 1
-    for y in testesgenero:
-        if y:
+    for ocorrencia in testes_genero:
+        if ocorrencia:
             contadores[1] = contadores[1] + 1
-    for z in testesproced:
-        if z:
+    for ocorrencia in testes_procedencia:
+        if ocorrencia:
             contadores[2] = contadores[2] + 1
     # 1
     if (contadores[0] > 0) and (contadores[1] == 0) and (contadores[2] == 0):
@@ -337,11 +341,10 @@ def filtrar(dataf, tela):   # filtra o dataframe de acordo com o parâmetros
     return resultado
 
 
-def salvar(valor_input, tela, dataf):   # salva o dataframe filtrado
-    window2 = tela
+def salvar(valor_input, dataf):   # salva o dataframe filtrado
+
     n_df = dataf
 
-    button, values = window2.Read()
     nome = valor_input
 
     if nome != '':

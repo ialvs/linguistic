@@ -41,26 +41,12 @@ while True:   # abertura do loop pra manter o programa aberto
             window5 = ''   # fecha a quinta tela se 'sair' for apertado nela
         elif window == window1:
             break   # fecha a primeira tela se 'sair' for apertado nela
-
+    
+    ############### tela de filtragem (2) ###############
     elif event == 'analisar_vs' and not window2:
         window2 = (
             tela_filtragem.montar_tela()
         )   # abre a segunda tela quando o botão for selecionado
-
-    elif event == 'analisar_vl' and not window3:
-        window3 = (
-            tela_analise_linguistica.montar_tela()
-        )   # abre a terceira tela quando o botão for selecionado
-
-    elif event == 'cod_vs' and not window4:
-        window4 = (
-            tela_cod_social.montar_tela()
-        )   # abre a quarta tela quando o botão for selecionado
-
-    elif event == 'insert_cod' and not window5:
-        window5 = (
-            tela_insere_cod.montar_tela()
-        )   # abre a quinta tela quando o botão for selecionado
 
     elif event == 'escolher':
         df = tela_filtragem.escolher(
@@ -68,27 +54,29 @@ while True:   # abertura do loop pra manter o programa aberto
         )   # chama o método responsável pela leitura do dataframe
         df_show = tela_filtragem.ver_tabela(df)   # mostra o dataframe como tabela
 
-    elif event == 'escolher3':
-        df2 = tela_cod_social.escolher(values['escolher3'])
-        df_show2 = tela_cod_social.ver_tabela(df2)
+    elif event == 'filtrar':
 
-    elif event == 'escolher4':
-        df_codl = tela_insere_cod.escolher(values['escolher4'])
-        sg.popup('PLANILHA ADICIONADA', title='Confirmação')
+        df_show.close()
 
-    elif event == 'escolher5':
-        v_lista = []
-        df_codsoc = tela_insere_cod.escolher(values['escolher5'])
-        sg.popup('PLANILHA ADICIONADA', title='Confirmação')
-        window5['out'].update(visible=False)
+        if c > 0:
+            ndf_show = None
 
-        for x in range(len(df_codsoc)):
-            v = df_codsoc.iat[x, 1] + ' | ' + df_codsoc.iat[x, 58]
-            v_lista.append(v)
+        n_df = tela_filtragem.filtrar(df, window2)
 
-        # print(v_lista)
-        window5['txt'].update(visible=True)
-        window5['lista'].update(values=v_lista, visible=True)
+        ndf_show = tela_filtragem.ver_tabela(n_df)
+        c = c + 1
+
+    elif event == 'salvar':
+        tela_filtragem.salvar(
+            values['nome_arquivo'], n_df
+        )   # salva o dataframe como .xlsx
+
+    ############### tela de análise linguística (3) ###############
+
+    elif event == 'analisar_vl' and not window3:
+        window3 = (
+            tela_analise_linguistica.montar_tela()
+        )   # abre a terceira tela quando o botão for selecionado
 
     elif event == 'escolher6':
         df_al = tela_analise_linguistica.escolher(values['escolher6'])
@@ -110,61 +98,9 @@ while True:   # abertura do loop pra manter o programa aberto
         stat_texto = df_al.groupby(by='texto').size()
         stx = stat_texto.to_string() + '\n' + '\n'
 
-    elif event == 'salvar':
-        tela_filtragem.salvar(
-            values['nome_arquivo'], ndf_show, n_df
-        )   # salva o dataframe como .xlsx
-
-    elif event == 'salvar3':
-        tela_cod_social.salvar(
-            values['nome_arquivo2'], df_show2, df2
-        )   # salva o dataframe como .xlsx
-
-    elif event == 'salvar4':
-        tela_insere_cod.salvar(
-            values['nome_arquivo3'], window5, df_codl
-        )   # salva o dataframe como .xlsx
-
     elif event == 'save_file':
         total = st + sd + stx
-        tela_analise_linguistica.salvar_stats(values['nome_arqstats'], window3, total)
-
-    elif event == 'add_cod':
-        df_show2.close()
-        df2['Código Social'] = tela_cod_social.codificar(df2)
-        df_show2 = tela_cod_social.ver_tabela(df2)
-
-    elif event == 'lista':
-        selected = window5['lista'].get()
-        df_codl['Código Social'] = tela_insere_cod.inserir(selected)
-        sg.popup('CÓDIGO ADICIONADO', title='Confirmação')
-
-        window5['lista'].update(visible=False)
-        exib = df_codl.to_string(
-            columns=['ocorrências', 'Código Social'], index=False
-        )
-        window5['out'].update(value=exib, visible=True)
-
-    elif event == 'filtrar':
-
-        df_show.close()
-
-        if c > 0:
-            ndf_show = None
-
-        n_df = tela_filtragem.filtrar(df, window2)
-
-        ndf_show = tela_filtragem.ver_tabela(n_df)
-        c = c + 1
-
-    elif event == 'atv_desvio':
-        graficos_al['imagem'].update(filename=d)
-
-    elif event == 'atv_ano':
-        graficos_al['imagem'].update(filename=a)
-
-    elif event == 'atv_tipo':
-        graficos_al['imagem'].update(filename=t)
+        tela_analise_linguistica.salvar_stats(values['nome_arqstats'], total)
 
     elif event == 'addNI':
         graficos_al.close()
@@ -192,3 +128,95 @@ while True:   # abertura do loop pra manter o programa aberto
 
         stat_texto = conkat.groupby(by='texto').size()
         stx = stat_texto.to_string() + '\n' + '\n'
+
+    ############### tela de análise linguística (4) ###############
+    
+    elif event == 'cod_vs' and not window4:
+        window4 = (
+            tela_cod_social.montar_tela()
+        )   # abre a quarta tela quando o botão for selecionado
+
+    elif event == 'escolher3':
+        df2 = tela_cod_social.escolher(values['escolher3'])
+        df_show2 = tela_cod_social.ver_tabela(df2)
+
+    elif event == 'insert_cod' and not window5:
+        window5 = (
+            tela_insere_cod.montar_tela()
+        )   # abre a quinta tela quando o botão for selecionado
+
+    elif event == 'add_cod':
+        df_show2.close()
+        df2['Código Social'] = tela_cod_social.codificar(df2)
+        df_show2 = tela_cod_social.ver_tabela(df2)
+
+    elif event == 'salvar3':
+        tela_cod_social.salvar(
+            values['nome_arquivo2'], df2
+        )   # salva o dataframe como .xlsx
+
+    
+    ############### tela de análise linguística (4) ###############
+    
+    elif event == 'escolher4':
+        df_codl = tela_insere_cod.escolher(values['escolher4'])
+        sg.popup('PLANILHA ADICIONADA', title='Confirmação')
+
+    elif event == 'escolher5':
+        v_lista = []
+        df_codsoc = tela_insere_cod.escolher(values['escolher5'])
+        sg.popup('PLANILHA ADICIONADA', title='Confirmação')
+        window5['out'].update(visible=False)
+
+        for x in range(len(df_codsoc)):
+            v = df_codsoc.iat[x, 1] + ' | ' + df_codsoc.iat[x, 58]
+            v_lista.append(v)
+
+        # print(v_lista)
+        window5['txt'].update(visible=True)
+        window5['lista'].update(values=v_lista, visible=True)
+
+    elif event == 'lista':
+        selected = window5['lista'].get()
+        df_codl['Código Social'] = tela_insere_cod.inserir(selected)
+        sg.popup('CÓDIGO ADICIONADO', title='Confirmação')
+
+        window5['lista'].update(visible=False)
+        exib = df_codl.to_string(
+            columns=['ocorrências', 'Código Social'], index=False
+        )
+        window5['out'].update(value=exib, visible=True)
+
+    elif event == 'salvar4':
+        tela_insere_cod.salvar(
+            values['nome_arquivo3'], df_codl
+        )   # salva o dataframe como .xlsx
+
+    elif event == 'atv_desvio':
+        graficos_al['imagem'].update(filename=d)
+
+    elif event == 'atv_ano':
+        graficos_al['imagem'].update(filename=a)
+
+    elif event == 'atv_tipo':
+        graficos_al['imagem'].update(filename=t)
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   
+
+    
+
+    

@@ -4,7 +4,6 @@ import os.path  # importa biblioteca para manipular o caminho dos arquivos
 
 import pandas as pd  # importa o pandas, biblioteca de data science
 import PySimpleGUI as sg  # importa a biblioteca gráfica
-from numpy import string_
 
 colunas = [
     'Nome',
@@ -168,8 +167,11 @@ def ver_tabela(dataf):   # mostra o dataframe selecionado para inserção
     cabecalhos = []
     data = []
 
-    cabecalhos = list(dataf.columns)
-    data = dataf[0:].values.tolist()
+    if (dataf != ''):
+        data = dataf[0:].values.tolist()
+        cabecalhos = list(dataf.columns)
+    else:
+        data.append('')
 
     layout = [
         [
@@ -202,22 +204,21 @@ def ver_tabela(dataf):   # mostra o dataframe selecionado para inserção
 
 def escolher(valor_input):   # abre o arquivo selecionado
     arquivo = valor_input
-    try:
+    
+    if (os.path.realpath(arquivo) != ''):
         caminho_arquivo = os.path.realpath(arquivo)
         df = pd.read_excel(caminho_arquivo)
         return df
-
-    except:
+    else:
         caminho_arquivo = []
+        return ''
 
 
 def codificar(dataf):   # codifica a partir da tabela selecionada
     df = dataf
     cds = []
-    cont_l = 0
     c = ''
     linha = ''
-    cont_c = 0
 
     for x in range(len(df)):
         for y in range(len(colunas)):
@@ -237,11 +238,9 @@ def codificar(dataf):   # codifica a partir da tabela selecionada
     return cds
 
 
-def salvar(valor_input, tela, dataf):   # salva a planilha codificada
-    window4 = tela
+def salvar(valor_input, dataf):   # salva a planilha codificada
     n_df = dataf
 
-    button, values = window4.Read()
     nome = valor_input
 
     if nome != '':

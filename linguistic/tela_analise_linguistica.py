@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import pandas as pd  # importa o pandas, biblioteca de data science
 import PySimpleGUI as sg  # importa a biblioteca gráfica
 import seaborn as sns
-from numpy import string_
 
 
 def montar_tela():   # definição da aparência e elementos da tela
@@ -73,8 +72,11 @@ def ver_tabela(dataf):   # abre a visualização do dataframe selecionado
     cabecalhos = []
     data = []
 
-    cabecalhos = list(dataf.columns)
-    data = dataf[0:].values.tolist()
+    if (dataf != ''):
+        data = dataf[0:].values.tolist()
+        cabecalhos = list(dataf.columns)
+    else:
+        data.append('')
 
     layout = [
         [
@@ -160,22 +162,21 @@ def mostrar_graphs(
 
 def escolher(valor_input):   # abre o arquivo selecionado
     arquivo = valor_input
-    try:
+    
+    if (os.path.realpath(arquivo) != ''):
         caminho_arquivo = os.path.realpath(arquivo)
         df = pd.read_excel(caminho_arquivo)
         return df
-
-    except:
+    else:
         caminho_arquivo = []
+        return ''
 
 
 def salvar_stats(
-    valor_input, tela, stats
+    valor_input, stats
 ):   # salva um arquivo com as estatísticas linguísticas
-    window3 = tela
     dados = stats
 
-    button, values = window3.Read()
     nome = valor_input
 
     if nome != '':

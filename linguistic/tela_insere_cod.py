@@ -104,16 +104,18 @@ def montar_tela():   # definição da aparência e elementos da tela
 
 def escolher(valor_input):   # abre o arquivo selecionado
     arquivo = valor_input
-    try:
+    
+    if (os.path.realpath(arquivo) != ''):
         caminho_arquivo = os.path.realpath(arquivo)
         df = pd.read_excel(caminho_arquivo)
         return df
-
-    except:
+    else:
         caminho_arquivo = []
+        return ''
 
 
 def inserir(valor_lista):
+    
     a = str(valor_lista)
     novelo = a.split()
     ultimo = len(novelo) - 1
@@ -125,11 +127,9 @@ def inserir(valor_lista):
     return cod
 
 
-def salvar(valor_input, tela, dataf):   # salva a planilha com códigos sociais
-    window5 = tela
+def salvar(valor_input, dataf):   # salva a planilha com códigos sociais
     n_df = dataf
 
-    button, values = window5.Read()
     nome = valor_input
 
     if nome != '':
