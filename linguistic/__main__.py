@@ -14,10 +14,10 @@ c = 0   # ?
 sg.theme('DarkBlue15')   # define o tema da interface gráfica
 
 window1 = tela_opcoes.montar_tela()   # cria e abre a tela principal do programa
-window2 = None   # definição da segunda tela
-window3 = None   # definição da terceira tela
-window4 = None   # definição da quarta tela
-window5 = None   # definição da quinta tela
+window2 = ''   # definição da segunda tela
+window3 = ''   # definição da terceira tela
+window4 = ''   # definição da quarta tela
+window5 = ''   # definição da quinta tela
 
 while True:   # abertura do loop pra manter o programa aberto
     (
@@ -32,13 +32,13 @@ while True:   # abertura do loop pra manter o programa aberto
         window.close()   # fechamento da tela (e do programa)
 
         if window == window2:
-            window2 = None  # fecha a segunda tela se 'sair' for apertado nela
+            window2 = ''  # fecha a segunda tela se 'sair' for apertado nela
         elif window == window3:
-            window3 = None  # fecha a terça tela se 'sair' for apertado nela
+            window3 = ''  # fecha a terça tela se 'sair' for apertado nela
         elif window == window4:
-            window4 = None   # fecha a quarta tela se 'sair' for apertado nela
+            window4 = ''   # fecha a quarta tela se 'sair' for apertado nela
         elif window == window5:
-            window5 = None   # fecha a quinta tela se 'sair' for apertado nela
+            window5 = ''   # fecha a quinta tela se 'sair' for apertado nela
         elif window == window1:
             break   # fecha a primeira tela se 'sair' for apertado nela
 
