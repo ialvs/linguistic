@@ -9,7 +9,7 @@ import seaborn as sns
 from numpy import string_
 
 
-def terceira_tela():   # definição da aparência e elementos da tela
+def montar_tela():   # definição da aparência e elementos da tela
     layout = [
         [
             sg.Text(

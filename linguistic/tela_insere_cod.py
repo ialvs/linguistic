@@ -6,7 +6,7 @@ import pandas as pd  # importa o pandas, biblioteca de data science
 import PySimpleGUI as sg  # importa a biblioteca gráfica
 
 
-def quinta_tela():   # definição da aparência e elementos da tela
+def montar_tela():   # definição da aparência e elementos da tela
     layout = [
         [
             sg.Text(

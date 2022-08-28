@@ -116,7 +116,7 @@ simbolos = [
 ]   # símbolos utilizados para codificar as colunas do dataframe
 
 
-def quarta_tela():   # definição da aparência e elementos da tela
+def montar_tela():   # definição da aparência e elementos da tela
     layout = [
         [
             sg.Text(

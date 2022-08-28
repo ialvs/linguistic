@@ -3,7 +3,7 @@
 import PySimpleGUI as sg  # importa a biblioteca gráfica
 
 
-def telaPrincipal():   # definição da aparência e elementos da tela
+def montar_tela():   # definição da aparência e elementos da tela
 
     layout = [
         [
