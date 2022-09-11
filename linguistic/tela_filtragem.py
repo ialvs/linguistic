@@ -2,9 +2,13 @@
 
 import os.path  # importa biblioteca para manipular o caminho dos arquivos
 
+from pathlib import Path 
+
 import checagem as chk  # importa classe utilizada no processo de filtragem
 import pandas as pd  # importa o pandas, biblioteca de data science
 import PySimpleGUI as sg  # importa a biblioteca gráfica
+
+pasta_atual = Path.cwd()
 
 
 def montar_tela():   # definição da aparência e elementos da tela
@@ -33,7 +37,7 @@ def montar_tela():   # definição da aparência e elementos da tela
                 button_text='Procurar',
                 font=(None, 15),
                 size=(16, None),
-                initial_folder='linguistic/tests/planilhas',
+                initial_folder= '..\tests\planilhas',
             ),
         ],
         [
@@ -161,7 +165,7 @@ def ver_tabela(dataf):   # abre a visualização do dataframe filtrado
     cabecalhos = []
     data = []
 
-    if (dataf != ''):
+    if (dataf.empty == False):
         data = dataf[0:].values.tolist()
         cabecalhos = list(dataf.columns)
     else:
@@ -349,11 +353,11 @@ def salvar(valor_input, dataf):   # salva o dataframe filtrado
 
     if nome != '':
         n_df.to_excel(
-            f'linguistic/saidas/planilhas/{nome}.xlsx', sheet_name='filtrado'
+            f'..\saidas\planilhas\{nome}.xlsx', sheet_name='filtrado'
         )
     else:
         n_df.to_excel(
-            'linguistic/saidas/planilhas/arquivo_modificado.xlsx',
+            '..\saidas\planilhas\arquivo_modificado.xlsx',
             sheet_name='filtrado',
         )
 

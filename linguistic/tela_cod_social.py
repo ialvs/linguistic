@@ -140,7 +140,7 @@ def montar_tela():   # definição da aparência e elementos da tela
                 button_text='Procurar',
                 font=(None, 15),
                 size=(16, None),
-                initial_folder='linguistic/tests/planilhas',
+                initial_folder='..\tests\planilhas'
             ),
         ],
         [
@@ -167,7 +167,7 @@ def ver_tabela(dataf):   # mostra o dataframe selecionado para inserção
     cabecalhos = []
     data = []
 
-    if (dataf != ''):
+    if (dataf.empty == False):
         data = dataf[0:].values.tolist()
         cabecalhos = list(dataf.columns)
     else:
@@ -245,12 +245,12 @@ def salvar(valor_input, dataf):   # salva a planilha codificada
 
     if nome != '':
         n_df.to_excel(
-            f'linguistic/saidas/planilhas/{nome}.xlsx',
+            f'..\saidas\planilhas\{nome}.xlsx',
             sheet_name='com códigos sociais',
         )
     else:
         n_df.to_excel(
-            'linguistic/saidas/planilhas/planilha_com_cod_soc.xlsx',
+            '..\saidas\planilhas\planilha_com_cod_soc.xlsx',
             sheet_name='com códigos sociais',
         )
 

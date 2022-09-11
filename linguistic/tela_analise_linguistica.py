@@ -33,7 +33,7 @@ def montar_tela():   # definição da aparência e elementos da tela
                 button_text='Procurar',
                 font=(None, 15),
                 size=(16, None),
-                initial_folder='linguistic/tests/planilhas',
+                initial_folder='tests\planilhas'
             ),
         ],
         [sg.Output(size=(100, 20), key='stats')],
@@ -112,19 +112,19 @@ def mostrar_graphs(
     nome_arquivo = df.iloc[1, 0]
 
     sns.catplot(x='tipo', data=df, kind='count', height=5, aspect=2)
-    t = f'linguistic/saidas/gráficos/tipo_{nome_arquivo}.png'
+    t = f'saidas\gráficos\tipo_{nome_arquivo}.png'
     plt.savefig(t)
 
     sns.catplot(x='desvio', data=df, kind='count', height=10, aspect=5)
-    d = f'linguistic/saidas/gráficos/desvio_{nome_arquivo}.png'
+    d = f'saidas\gráficos\desvio_{nome_arquivo}.png'
     plt.savefig(d)
 
     sns.catplot(x='desvio', data=df, kind='count', height=5, aspect=2)
-    d_s = f'linguistic/saidas/gráficos/desvio_{nome_arquivo} (s).png'
+    d_s = f'saidas\gráficos\desvio_{nome_arquivo} (s).png'
     plt.savefig(d_s)
 
     sns.catplot(x='ano', data=df, kind='count', height=5, aspect=2)
-    a = f'linguistic/saidas/gráficos/ano_{nome_arquivo}.png'
+    a = f'saidas\gráficos\ano_{nome_arquivo}.png'
     plt.savefig(a)
 
     layout = [
@@ -180,11 +180,11 @@ def salvar_stats(
     nome = valor_input
 
     if nome != '':
-        arquivo = open(f'linguistic/saidas/análises/{nome}.txt', 'a')
+        arquivo = open(f'saidas\análises\{nome}.txt', 'a')
         arquivo.write(dados)
     else:
         arquivo = open(
-            'linguistic/saidas/análises/estatística planilha linguística.txt',
+            'saidas\análises\estatística planilha linguística.txt',
             'a',
         )
         arquivo.write(dados)

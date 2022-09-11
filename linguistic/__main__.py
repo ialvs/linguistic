@@ -49,6 +49,7 @@ while True:   # abertura do loop pra manter o programa aberto
         )   # abre a segunda tela quando o botão for selecionado
 
     elif event == 'escolher':
+        print(values['escolher'])
         df = tela_filtragem.escolher(
             values['escolher']
         )   # chama o método responsável pela leitura do dataframe
